@@ -77,11 +77,6 @@ class Model
 
     public function insert(array $data)
     {
-        // $data = [
-        //     'name' => 'Ahihi',
-        //     'email' => 'keke@gnai.com',
-        //     'address' => 'HN'
-        // ];
 
         if (!empty($data)) {
             $query = $this->queryBuilder->insert($this->tableName);
@@ -109,12 +104,6 @@ class Model
     {
         if (!empty($data)) {
             $query = $this->queryBuilder->update($this->tableName);
-
-            // $data = [
-            //     'name' => 'Ahihi',
-            //     'email' => 'keke@gnai.com',
-            //     'address' => 'HN'
-            // ];
 
             $index = 0;
             foreach ($data as $key => $value) {

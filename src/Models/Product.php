@@ -15,7 +15,9 @@ class Product extends Model
                 'p.id',
                 'p.category_id',
                 'p.name',
+                'p.price',
                 'p.img_thumbnail',
+                'p.quantity',
                 'p.created_at',
                 'p.updated_at',
                 'c.name as c_name'
@@ -39,7 +41,9 @@ class Product extends Model
                 'p.id',
                 'p.category_id',
                 'p.name',
+                'p.price',
                 'p.img_thumbnail',
+                'p.quantity',
                 'p.created_at',
                 'p.updated_at',
                 'c.name as c_name'
@@ -59,14 +63,18 @@ class Product extends Model
         return $this->queryBuilder
             ->select(
                 'p.id',
-                'p.category_id',
+                // 'p.category_id',
                 'p.name',
+                'c.name as categories',
+                'p.price',
                 'p.img_thumbnail',
-                'p.created_at',
-                'p.updated_at',
+                'p.quantity',
                 'p.overview',
                 'p.content',
-                'c.name as c_name'
+                'p.created_at',
+                'p.updated_at',
+                
+                
             )
             ->from($this->tableName, 'p')
             ->innerJoin('p', 'categories', 'c', 'c.id = p.category_id')

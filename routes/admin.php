@@ -22,7 +22,7 @@ $router->mount('/admin', function () use ($router) {
 
     $router->get('/', DashboardController::class . '@dashboard');
 
-    // CRUD PRODUCT
+    // CRUD Category
     $router->mount('/category', function () use ($router) {
         $router->get('/',               CategoryController::class . '@index');  // Danh sách
         $router->get('/create',         CategoryController::class . '@create'); // Show form thêm mới

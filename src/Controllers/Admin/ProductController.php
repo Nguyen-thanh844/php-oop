@@ -19,15 +19,17 @@ class ProductController extends Controller
         $this->category = new Category();
     }
 
+//Danh sách 
     public function index()
     {
+       
         $products = $this->product->all();
 
         $this->renderViewAdmin('products.index', [
             'products' => $products
         ]);
     }
-
+//thêm
     public function create()
     {
         $categories = $this->category->all();
@@ -38,7 +40,7 @@ class ProductController extends Controller
             'categoryPluck' => $categoryPluck
         ]);
     }
-
+//lưu mới vào db
     public function store()
     {
         // VALIDATE
@@ -48,6 +50,8 @@ class ProductController extends Controller
             'name'                  => 'required|max:100',
             'overview'              => 'max:500',
             'content'               => 'max:65000',
+            'price'                 => 'required',
+            'quantity'                 => 'required',
             'img_thumbnail'         => 'uploaded_file:0,2048K,png,jpeg,jpg',
         ]);
         $validation->validate();
@@ -61,6 +65,8 @@ class ProductController extends Controller
             $data = [
                 'category_id'   => $_POST['category_id'],
                 'name'          => $_POST['name'],
+                'price'          => $_POST['price'],
+                'quantity'          => $_POST['quantity'],
                 'overview'      => $_POST['overview'],
                 'content'       => $_POST['content'],
             ];
@@ -89,7 +95,7 @@ class ProductController extends Controller
             exit;
         }
     }
-
+//chi tiết
     public function show($id)
     {
         $product = $this->product->findByID($id);
@@ -121,6 +127,8 @@ class ProductController extends Controller
         $validation = $validator->make($_POST + $_FILES, [
             'category_id'           => 'required',
             'name'                  => 'required|max:100',
+            'price'                 => 'required',
+            'quantity'              => 'required',
             'overview'              => 'max:500',
             'content'               => 'max:65000',
             'img_thumbnail'         => 'uploaded_file:0,2048K,png,jpeg,jpg',
@@ -136,6 +144,8 @@ class ProductController extends Controller
             $data = [
                 'category_id'   => $_POST['category_id'],
                 'name'          => $_POST['name'],
+                'price'          => $_POST['price'],
+                'quantity'          => $_POST['quantity'],
                 'overview'      => $_POST['overview'],
                 'content'       => $_POST['content'],
                 'updated_at'    => date('Y-m-d H:i:s')
