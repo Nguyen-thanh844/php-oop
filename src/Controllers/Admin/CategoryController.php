@@ -16,22 +16,22 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $category = $this->category->all();
+        $categories = $this->category->all();
 
-        $this->renderViewAdmin('category.index', [
-            'category' => $category
+        $this->renderViewAdmin('categories.index', [
+            'categories' => $categories
         ]);
     }
 
     public function create()
     {
-        $this->renderViewAdmin('category.create');
+        $this->renderViewAdmin('categories.create');
     }
 
     public function store()
     {
         $validator = new Validator;
-        $validation = $validator->make($_POST + $_FILES, [
+        $validation = $validator->make($_POST, [
             'name'                  => 'required|max:50',
             
         ]);
@@ -40,7 +40,7 @@ class CategoryController extends Controller
         if ($validation->fails()) {
             $_SESSION['errors'] = $validation->errors()->firstOfAll();
 
-            header('Location: ' . url('admin/category/create'));
+            header('Location: ' . url('admin/categories/create'));
             exit;
         } else {
             $data = [
@@ -55,25 +55,25 @@ class CategoryController extends Controller
             $_SESSION['status'] = true;
             $_SESSION['msg'] = 'Thao tác thành công';
 
-            header('Location: ' . url('admin/category'));
+            header('Location: ' . url('admin/categories'));
             exit;
         }
     }
 
-    public function show($id)
-    {
-        $category = $this->category->findByID($id);
+    // public function show($id)
+    // {
+    //     $category = $this->category->findByID($id);
 
-        $this->renderViewAdmin('category.show', [
-            'category' => $category
-        ]);
-    }
+    //     $this->renderViewAdmin('categories.show', [
+    //         'categories' => $category
+    //     ]);
+    // }
 
     public function edit($id)
     {
         $category = $this->category->findByID($id);
 
-        $this->renderViewAdmin('category.edit', [
+        $this->renderViewAdmin('categories.edit', [
             'category' => $category
         ]);
     }
@@ -83,7 +83,7 @@ class CategoryController extends Controller
         $category = $this->category->findByID($id);
 
         $validator = new Validator;
-        $validation = $validator->make($_POST + $_FILES, [
+        $validation = $validator->make($_POST, [
             'name'                  => 'required|max:50',
             
         ]);
@@ -92,16 +92,13 @@ class CategoryController extends Controller
         if ($validation->fails()) {
             $_SESSION['errors'] = $validation->errors()->firstOfAll();
 
-            header('Location: ' . url("admin/category/{$category['id']}/edit"));
+            header('Location: ' . url("admin/categories/{$category['id']}/edit"));
             exit;
         } else {
             $data = [
                 'name'      => $_POST['name'],
                 
             ];
-
-          
-          
 
             $this->category->update($id, $data);
 
@@ -110,15 +107,16 @@ class CategoryController extends Controller
             $_SESSION['status'] = true;
             $_SESSION['msg'] = 'Thao tác thành công';
 
-            header('Location: ' . url("admin/category/{$category['id']}/edit"));
+            header('Location: ' . url("admin/categories/{$category['id']}/edit"));
             exit;
         }
     }
+//
 
     public function delete($id)
     {
         try {
-            $user = $this->category->findByID($id);
+            $category = $this->category->findByID($id);
 
             $this->category->delete($id);
 
@@ -131,7 +129,7 @@ class CategoryController extends Controller
             $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
         }
 
-        header('Location: ' . url('admin/category'));
+        header('Location: ' . url('admin/categories'));
         exit();
     }
 }
