@@ -36,7 +36,7 @@ class UserController extends Controller
             'email'                 => 'required|email',
             'password'              => 'required|min:6',
             // 'confirm_password'      => 'required|same:password',
-            // 'avatar'                => 'uploaded_file:0,2M,png,jpg,jpeg',
+            'avatar'                => 'uploaded_file:0,2M,png,jpg,jpeg',
             'type'                  => 'required|in:admin,member',
         ]);
         $validation->validate();
@@ -54,20 +54,20 @@ class UserController extends Controller
                 'password'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
             ];
 
-            // if (isset($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
 
-            //     $from = $_FILES['avatar']['tmp_name'];
-            //     $to = 'assets/uploads/' . time() . $_FILES['avatar']['name'];
+                $from = $_FILES['avatar']['tmp_name'];
+                $to = 'assets/uploads/' . time() . $_FILES['avatar']['name'];
 
-            //     if (move_uploaded_file($from, PATH_ROOT . $to)) {
-            //         $data['avatar'] = $to;
-            //     } else {
-            //         $_SESSION['errors']['avatar'] = 'Upload Không thành công';
+                if (move_uploaded_file($from, PATH_ROOT . $to)) {
+                    $data['avatar'] = $to;
+                } else {
+                    $_SESSION['errors']['avatar'] = 'Upload Không thành công';
 
-            //         header('Location: ' . url('admin/users/create'));
-            //         exit;
-            //     }
-            // }
+                    header('Location: ' . url('admin/users/create'));
+                    exit;
+                }
+            }
 
             $this->user->insert($data);
 
@@ -125,33 +125,33 @@ class UserController extends Controller
                     ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $user['password'],
             ];
 
-            // $flagUpload = false;
-            // if (isset($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
+            $flagUpload = false;
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
 
-            //     $flagUpload = true;
+                $flagUpload = true;
 
-            //     $from = $_FILES['avatar']['tmp_name'];
-            //     $to = 'assets/uploads/' . time() . $_FILES['avatar']['name'];
+                $from = $_FILES['avatar']['tmp_name'];
+                $to = 'assets/uploads/' . time() . $_FILES['avatar']['name'];
 
-            //     if (move_uploaded_file($from, PATH_ROOT . $to)) {
-            //         $data['avatar'] = $to;
-            //     } else {
-            //         $_SESSION['errors']['avatar'] = 'Upload Không thành công';
+                if (move_uploaded_file($from, PATH_ROOT . $to)) {
+                    $data['avatar'] = $to;
+                } else {
+                    $_SESSION['errors']['avatar'] = 'Upload Không thành công';
 
-            //         header('Location: ' . url("admin/users/{$user['id']}/edit"));
-            //         exit;
-            //     }
-            // }
+                    header('Location: ' . url("admin/users/{$user['id']}/edit"));
+                    exit;
+                }
+            }
 
             $this->user->update($id, $data);
 
-            // if (
-            //     $flagUpload
-            //     && $user['avatar']
-            //     && file_exists(PATH_ROOT . $user['avatar'])
-            // ) {
-            //     unlink(PATH_ROOT . $user['avatar']);
-            // }
+            if (
+                $flagUpload
+                && $user['avatar']
+                && file_exists(PATH_ROOT . $user['avatar'])
+            ) {
+                unlink(PATH_ROOT . $user['avatar']);
+            }
 
             $_SESSION['status'] = true;
             $_SESSION['msg'] = 'Thao tác thành công';
@@ -179,7 +179,7 @@ class UserController extends Controller
             $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
         }
 
-        header('Location: ' . url('admin/Users'));
+        header('Location: ' . url('admin/users'));
         exit();
     }
 }
