@@ -17,6 +17,13 @@ use Thanhnt84\Duan1\Controllers\Admin\UserController;
 //         exit();
 //     }
 // });
+///
+$router->before('GET|POST', '/admin/*.*', function () {
+    if (!isset($_SESSION['user'])) {
+        header('location: ' . url('login'));
+        exit();
+    }
+});
 
 $router->mount('/admin', function () use ($router) {
 

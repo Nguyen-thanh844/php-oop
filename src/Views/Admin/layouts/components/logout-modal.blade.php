@@ -10,7 +10,10 @@
             <div class="modal-body">Chọn "Đăng xuất" bên dưới nếu bạn sẵn sàng kết thúc phiên hiện tại của mình.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                <a class="btn btn-primary" href="{{ url('/') }}">Đăng xuất</a>
+                @if (isset($_SESSION['user']))
+                <a class="btn btn-primary" href="{{ url('logout') }}">Đăng xuất</a>
+                @endif
+                
             </div>
         </div>
     </div>
