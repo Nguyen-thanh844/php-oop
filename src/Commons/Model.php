@@ -28,6 +28,11 @@ class Model
         $this->queryBuilder = $this->conn->createQueryBuilder();
     }
 
+    public function getConnection()
+    {
+        return $this->conn;
+    }
+
     // CRUD
     public function all()
     {
@@ -48,7 +53,7 @@ class Model
 
     public function paginate($page = 1, $perPage = 5)
     {
-        $queryBuilder = clone ($this->queryBuilder);
+        $queryBuilder = clone($this->queryBuilder);
 
         $totalPage = ceil($this->count() / $perPage);
 
@@ -77,13 +82,8 @@ class Model
 
     public function insert(array $data)
     {
-
         if (!empty($data)) {
             $query = $this->queryBuilder->insert($this->tableName);
-
-            // $query->setValue('name', '?')->setParameter(0, $data['name']);
-            // $query->setValue('email', '?')->setParameter(1, $data['email']);
-            // $query->setValue('address', '?')->setParameter(2, $data['address']);
 
             $index = 0;
             foreach ($data as $key => $value) {
@@ -113,7 +113,7 @@ class Model
             }
 
             $query->where('id = ?')
-                ->setParameter(count($data), $id)
+            ->setParameter(count($data), $id)
                 ->executeQuery();
 
             return true;

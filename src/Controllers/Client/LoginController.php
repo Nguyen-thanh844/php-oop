@@ -17,14 +17,16 @@ class LoginController extends Controller
 
     public function showFormLogin()
     {
-        avoid_login();
+        // avoid_login();
+        auth_check();
 
         $this->renderViewClient('login');
     }
 
     public function login()
     {
-        avoid_login();
+        // avoid_login();
+        auth_check();
 
         try {
             $user = $this->user->findByEmail($_POST['email']);
@@ -37,7 +39,7 @@ class LoginController extends Controller
             if ($flag) {
 
                 $_SESSION['user'] = $user;
-
+                unset($_SESSION['cart']);
                 if ($user['type'] == 'admin') {
                     header('Location: ' . url('admin/'));
                     exit;
@@ -58,6 +60,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+        unset($_SESSION['cart-' . $_SESSION['user']['id']]);
         unset($_SESSION['user']);
 
         header('Location: ' . url());

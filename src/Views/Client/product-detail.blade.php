@@ -53,12 +53,12 @@
                        <div class="product__details__price">${{ $product['price']}}</div>
                        <p>{{ $product['overview']}}</p>
 
-                       <form action="{{url ('cart/add') }}?productID={{$product['id']}}" method="get">
+                       <form action="{{url ('cart/add') }}" method="get">
                            <input type="hidden" name="productID" value="{{$product['id']}}">
                            <div class="product__details__quantity">
                                <div class="quantity">
                                    <div class="pro-qty">
-                                       <input type="text" value="1">
+                                       <input type="number" min="1" name="quantity"  value="1">
                                    </div>
                                </div>
                            </div>

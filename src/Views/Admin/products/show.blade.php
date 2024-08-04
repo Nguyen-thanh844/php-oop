@@ -26,7 +26,25 @@ Xem chi tiết: {{ $product['name'] }}
                 @foreach ($product as $key => $value)
                 <tr>
                     <td>{{ $key }}</td>
-                    <td>{!! $value !!}</td>
+                    <!-- <td>{!! $value !!}</td> -->
+                    <td>
+                        <?php
+                        switch ($key) {
+                            case 'image':
+                                echo '<img src="' . htmlspecialchars($value) . '" alt="Product Image" style="max-width: 200px; height: auto;">';
+                                break;
+                            case 'category_id':
+                                // $i = 0;
+                                $sx_categories = array_reverse($categories);
+                                echo $sx_categories[2]["name"];
+                                // print_r($categories);
+                                break;
+                            default:
+                                echo htmlspecialchars($value);
+                                break;
+                        }
+                        ?>
+                    </td>
                 </tr>
                 @endforeach
 

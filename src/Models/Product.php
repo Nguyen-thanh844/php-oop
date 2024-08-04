@@ -82,4 +82,5 @@ class Product extends Model
             ->setParameter(0, $id)
             ->fetchAssociative();
     }
+    
 }

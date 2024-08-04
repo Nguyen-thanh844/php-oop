@@ -8,27 +8,6 @@ Cart
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
-            <!-- <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all">
-                        <i class="fa fa-bars"></i>
-                        <span>All departments</span>
-                    </div>
-                    <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
-                    </ul>
-                </div>
-            </div> -->
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
@@ -58,14 +37,14 @@ Cart
 <!-- Hero Section End -->
 
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+<section class="breadcrumb-section set-bg" data-setbg="{{ asset('assets/client/img/breadcrumb.jpg')}}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
                     <h2>Shopping Cart</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
+                        <a href="{{ url() }}">Home</a>
                         <span>Shopping Cart</span>
                     </div>
                 </div>
@@ -82,15 +61,15 @@ Cart
             @if (!empty($_SESSION['cart']) || !empty($_SESSION['cart-' . $_SESSION['user']['id']]))
             <div class="col-lg-12">
                 <div class="shoping__cart__table">
-                    <table>
+                    <table ">
                         <thead>
                             <tr>
-                                <th class="shoping__product">Tên sản phẩm</th>
-                                <th>Giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                                <th></th>
-                            </tr>
+                                <th class=" shoping__product">Tên sản phẩm</th>
+                        <th>Giá tiền</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th>Xóa</th>
+                        </tr>
                         </thead>
                         <tbody>
 
@@ -100,97 +79,86 @@ Cart
                             @foreach ($cart as $item)
                             <tr>
                                 <td class="shoping__cart__item">
-                                    <img src="{{ asset($item['img_thumbnail']) }}" alt="">
+                                    <img src="{{ asset($item['img_thumbnail']) }}" width="100px" alt="">
                                     <h5>{{ $item['name'] }}</h5>
                                 </td>
                                 <td class="shoping__cart__price">
-                                    ${{ $item['price'] }}
+                                    {{ $item['price']  }}
                                 </td>
                                 <td class="shoping__cart__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
+                                    <div class="quantity w-[140px] h-[40px] bg-slate-200">
+
+                                        @php
+                                        $url = url('cart/quantityDec') . '?productID=' . $item['id'];
+
+                                        if (isset($_SESSION['cart-' . $_SESSION['user']['id']])) {
+                                        $url .= '&cartID=' . $_SESSION['cart_id'];
+                                        }
+                                        @endphp
+                                        <a class="" href="{{ $url }}">-</a>
+
+                                        {{ $item['quantity'] }}
+
+                                        @php
+                                        $url = url('cart/quantityInc') . '?productID=' . $item['id'];
+
+                                        if (isset($_SESSION['cart-' . $_SESSION['user']['id']])) {
+                                        $url .= '&cartID=' . $_SESSION['cart_id'];
+                                        }
+                                        @endphp
+                                        <a class="" href="{{ $url }}">+</a>
+
                                     </div>
                                 </td>
+
                                 <td class="shoping__cart__total">
-                                    $110.00
+                                    {{ $item['quantity'] * $item['price'] }}
                                 </td>
                                 <td class="shoping__cart__item__close">
-                                    <span class="icon_close"></span>
+                                    @php
+                                    $url = url('cart/remove') . '?productID=' . $item['id'];
+
+                                    if (isset($_SESSION['cart-' . $_SESSION['user']['id']])) {
+                                    $url .= '&cartID=' . $_SESSION['cart_id'];
+                                    }
+                                    @endphp
+                                    <a onclick="return confirm('Có chắn không?')" href="{{ $url }}">Xóa</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="shoping__cart__item">
-                                    <img src="img/balo/26.png" alt="">
-                                    <h5>Fresh Garden Vegetable</h5>
-                                </td>
-                                <td class="shoping__cart__price">
-                                    $39.00
-                                </td>
-                                <td class="shoping__cart__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="shoping__cart__total">
-                                    $39.99
-                                </td>
-                                <td class="shoping__cart__item__close">
-                                    <span class="icon_close"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="shoping__cart__item">
-                                    <img src="img/balo/1.png" alt="">
-                                    <h5>Organic Bananas</h5>
-                                </td>
-                                <td class="shoping__cart__price">
-                                    $69.00
-                                </td>
-                                <td class="shoping__cart__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="shoping__cart__total">
-                                    $69.99
-                                </td>
-                                <td class="shoping__cart__item__close">
-                                    <span class="icon_close"></span>
-                                </td>
-                            </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="shoping__cart__btns">
-                    <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                    <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                        Upadate Cart</a>
-                </div>
-            </div>
 
-            <div class="col-lg-6">
-                <div class="shoping__checkout">
-                    <h5>Cart Total</h5>
-                    <ul>
-                        <li>Subtotal <span>$454.98</span></li>
-                        <li>Total <span>$454.98</span></li>
-                    </ul>
-                    <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
-                </div>
+            <div class="col-md-4 mb-2 mt-2">
+                <form action="{{ url('order/checkout') }}" method="POST">
+                    <div class="mb-3 mt-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" value="{{ $_SESSION['user']['name'] ?? null }}" placeholder="Enter name" name="user_name">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" value="{{ $_SESSION['user']['email'] ?? null }}" placeholder="Enter email" name="user_email">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="phone" class="form-label">Phone:</label>
+                        <input type="text" class="form-control" id="phone" value="{{ $_SESSION['user']['phone'] ?? null }}" placeholder="Enter phone" name="user_phone">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" value="{{ $_SESSION['user']['address'] ?? null }}" placeholder="Enter address" name="user_address">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
+            @endif
         </div>
     </div>
 </section>
 <!-- Shoping Cart Section End -->
+
 
 @endsection

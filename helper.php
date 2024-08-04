@@ -30,17 +30,26 @@ if (!function_exists('is_admin')) { // Check là admin
     }
 }
 
-if (!function_exists('avoid_login')) { // Bỏ qua trang Login khi đã đăng nhập
-    function avoid_login()
+// if (!function_exists('avoid_login')) { // Bỏ qua trang Login khi đã đăng nhập
+//     function avoid_login()
+//     {
+//         if (is_logged()) {
+
+//             if ($_SESSION['user']['type'] == 'admin') {
+//                 header('Location: ' . url('admin/'));
+//                 exit;
+//             }
+
+//             header('Location: ' . url());
+//             exit;
+//         }
+//     }
+// }
+if (!function_exists('auth_check')) {
+    function auth_check()
     {
-        if (is_logged()) {
-
-            if ($_SESSION['user']['type'] == 'admin') {
-                header('Location: ' . url('admin/'));
-                exit;
-            }
-
-            header('Location: ' . url());
+        if (isset($_SESSION['user'])) {
+            header('Location: ' . url('admin/'));
             exit;
         }
     }

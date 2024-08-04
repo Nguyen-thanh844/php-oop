@@ -26,8 +26,6 @@
         Interface
     </div>
 
-    
-
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
@@ -57,7 +55,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ url('admin/category') }}">Quản lý danh mục</a>
+                <a class="collapse-item" href="{{ url('admin/categories') }}">Quản lý danh mục</a>
                 <a class="collapse-item" href="{{ url('admin/products') }}">Quản lý sản phẩm</a>
                 <a class="collapse-item" href="{{ url('admin/users') }}">Quản lý tài khoản</a>
                 <a class="collapse-item" href="{{ url('admin/orders') }}">Quản lý đơn hàng</a>
@@ -87,6 +85,6 @@
     </div>
 
     <!-- Sidebar Message -->
-    
+
 
 </ul>

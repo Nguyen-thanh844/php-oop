@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-Cập nhật Người dùng: {{ $product['name'] }}
+Cập nhật sản phẩm: {{ $product['name'] }}
 @endsection
 
 @section('content')

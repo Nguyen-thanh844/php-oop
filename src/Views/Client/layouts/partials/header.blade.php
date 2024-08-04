@@ -23,10 +23,13 @@
 
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="act=login-client">Login</a></li>
-                                <li><a href="?act=logup-client">Register</a></li>
+
                                 @if (!isset($_SESSION['user']))
-                                <li><a href="{{ url('login') }}">Login admin</a></li>
+                                <li><a href="{{ url('login') }}">Login </a></li>
+                                @endif
+                                <li><a href="#">Register </a></li>
+                                @if (isset($_SESSION['user']))
+                                <li><a href="{{ url('logout') }}">Logout </a></li>
                                 @endif
 
                             </ul>
@@ -68,7 +71,8 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="/ogani-master/shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        
+                        <li><a href="{{url ('cart/add') }}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
                 </div>
